@@ -1,0 +1,3 @@
+C:\Users\didacpm\Desktop\SpriteSDL-master\Debug\SpriteSDL.exe
+C:\Users\guillemam2\Documents\GitHub\Exercise01-Plant\Debug\SpriteSDL.exe
+C:\Users\guillemam2\Documents\GitHub\Exercise02-Teleport\Debug\SpriteSDL.exe
