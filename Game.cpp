@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <math.h>
 
-Game::Game() {}
+Game::Game() { currentPlatform = 1; }
 Game::~Game(){}
 
 bool Game::Init()
@@ -38,7 +38,7 @@ bool Game::Init()
 	Player.Init(20, WINDOW_HEIGHT >> 1, 100, 100, 5);
 	Box.Init(320, 500, 100, 100, 5);
 	Platform1.Init(20, 480, 300, 20, 5);
-	Platform2.Init(320, 600, 300, 20, 5);
+	Platform2.Init(325, 600, 300, 20, 5);
 	idx_shot = 0;
 	int w;
 	SDL_QueryTexture(img_background, NULL, NULL, &w, NULL);
@@ -110,17 +110,23 @@ bool Game::Update()
 	//Process Input
 	int fx = 0, fy = 0;
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN)	return true;
-	if (keys[SDL_SCANCODE_A] == KEY_REPEAT)	fx = -1;
-	if (keys[SDL_SCANCODE_D] == KEY_REPEAT)	fx = 1;
+	if (keys[SDL_SCANCODE_A] == KEY_REPEAT && rc.x > 20)	fx = -1;
+	if (keys[SDL_SCANCODE_D] == KEY_REPEAT && ra.x < 520)	fx = 1;
 
 
 	//Logic
-	if (rc.x <= 220 || ra.x < 320) isMoving = true;
-	else isMoving = false;
+	int previousPlatform = currentPlatform;
+
+	if (currentPlatform == 1 && rc.x > 215)
+		currentPlatform = 2;
+	else if (currentPlatform == 2 && ra.x < 325)
+		currentPlatform = 1;
 
 	//Player update
-	if (isMoving) Player.Move(fx, fy);
-	else Box.Move(fx, fy);
+	if (currentPlatform == 1)
+		Player.Move(fx, fy);
+	else
+		Box.Move(fx, fy);
 		
 	return false;
 }
@@ -140,8 +146,10 @@ void Game::Draw()
 	Platform2.GetRect(&rp2.x, &rp2.y, &rp2.w, &rp2.h);
 
 	//Draw player
-	if (isMoving) SDL_RenderCopy(Renderer, img_player, NULL, &rc);
-	else SDL_RenderCopy(Renderer, img_box, NULL, &ra);
+	if (currentPlatform == 1)
+		SDL_RenderCopy(Renderer, img_player, NULL, &rc);
+	else
+		SDL_RenderCopy(Renderer, img_box, NULL, &ra);
 	SDL_RenderCopy(Renderer, img_platform, NULL, &rp);
 	SDL_RenderCopy(Renderer, img_platform, NULL, &rp2);
 	
