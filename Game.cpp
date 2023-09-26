@@ -35,9 +35,9 @@ bool Game::Init()
 
 	//Init variables
 	//size: 104x82
-	Player.Init(20, WINDOW_HEIGHT >> 1, 100, 100, 5);
+	Player.Init(120, 300, 100, 100, 5);
 	Box.Init(320, 500, 100, 100, 5);
-	Platform1.Init(20, 480, 300, 20, 5);
+	Platform1.Init(20, 400, 300, 20, 5);
 	Platform2.Init(325, 600, 300, 20, 5);
 	idx_shot = 0;
 	int w;
@@ -117,17 +117,40 @@ bool Game::Update()
 	//Logic
 	int previousPlatform = currentPlatform;
 
-	if (currentPlatform == 1 && rc.x > 215)
+	if (currentPlatform == 1 && rp.x == 300)
+	{
 		currentPlatform = 2;
-	else if (currentPlatform == 2 && ra.x < 325)
-		currentPlatform = 1;
+	}
+	else if (currentPlatform == 2 && rp.x == 300) currentPlatform = 1;
 
 	//Player update
-	if (currentPlatform == 1)
-		Player.Move(fx, fy);
-	else
-		Box.Move(fx, fy);
+
 		
+	if (right)
+	{
+		Platform1.Move(1, 0);
+	}
+	else
+	{
+		Platform1.Move(-1, 0);
+		right = false;
+	}
+
+	if (currentPlatform == 1 && right)
+	{
+		Player.Move(1, 0);
+	}
+	else if (currentPlatform == 1 && !right) Player.Move(-1, 0);
+
+	if (currentPlatform != previousPlatform)
+	{
+		if (right) Player.Move(0, 40);
+		else Player.Move(0, -40);
+	}
+
+	if (rp.x == 600) right = false;
+	if (rp.x == 20) right = true;
+
 	return false;
 }
 void Game::Draw()
@@ -141,15 +164,14 @@ void Game::Draw()
 	//God mode uses red wireframe rectangles for physical objects
 
 	Player.GetRect(&rc.x, &rc.y, &rc.w, &rc.h);
-	Box.GetRect(&ra.x, &ra.y, &ra.w, &ra.h);
+	//Box.GetRect(&ra.x, &ra.y, &ra.w, &ra.h);
 	Platform1.GetRect(&rp.x, &rp.y, &rp.w, &rp.h);
 	Platform2.GetRect(&rp2.x, &rp2.y, &rp2.w, &rp2.h);
 
 	//Draw player
-	if (currentPlatform == 1)
-		SDL_RenderCopy(Renderer, img_player, NULL, &rc);
-	else
-		SDL_RenderCopy(Renderer, img_box, NULL, &ra);
+
+	SDL_RenderCopy(Renderer, img_player, NULL, &rc);
+
 	SDL_RenderCopy(Renderer, img_platform, NULL, &rp);
 	SDL_RenderCopy(Renderer, img_platform, NULL, &rp2);
 	
