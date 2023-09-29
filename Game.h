@@ -41,7 +41,10 @@ private:
 	SDL_Rect ra;
 	SDL_Rect rp;
 	SDL_Rect rp2;
+
+	int cameraY;
 	int currentPlatform;
+	float previousTime = 0;
 
 	bool right = true;
 

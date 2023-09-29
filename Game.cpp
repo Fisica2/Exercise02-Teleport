@@ -12,7 +12,7 @@ bool Game::Init()
 		return false;
 	}
 	//Create our window: title, x, y, w, h, flags
-	Window = SDL_CreateWindow("Spaceship: arrow keys + space, f1: god mode", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+	Window = SDL_CreateWindow("Teleport", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	if (Window == NULL)
 	{
 		SDL_Log("Unable to create window: %s", SDL_GetError());
@@ -42,8 +42,10 @@ bool Game::Init()
 	idx_shot = 0;
 	int w;
 	SDL_QueryTexture(img_background, NULL, NULL, &w, NULL);
-	Scene.Init(0, 0, w, WINDOW_HEIGHT, 4);
+	Scene.Init(0, 0, w, 20, 4);
 	god_mode = false;
+
+	cameraY = 0;
 
 	return true;
 }
@@ -107,6 +109,10 @@ bool Game::Update()
 	//Read Input
 	if (!Input())	return true;
 
+	Uint32 currentTime = SDL_GetTicks();
+    float deltaTime = (currentTime - previousTime) / 1000.0f;
+    previousTime = currentTime;
+
 	//Process Input
 	int fx = 0, fy = 0;
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN)	return true;
@@ -128,24 +134,32 @@ bool Game::Update()
 		
 	if (right)
 	{
-		Platform1.Move(1, 0);
+		Platform1.Move(100 * deltaTime, 0);
 	}
 	else
 	{
-		Platform1.Move(-1, 0);
+		Platform1.Move(-100 * deltaTime, 0);
 		right = false;
 	}
 
 	if (currentPlatform == 1 && right)
 	{
-		Player.Move(1, 0);
+		Player.Move(100 * deltaTime, 0);
 	}
-	else if (currentPlatform == 1 && !right) Player.Move(-1, 0);
+	else if (currentPlatform == 1 && !right) Player.Move(-100 * deltaTime, 0);
 
 	if (currentPlatform != previousPlatform)
 	{
-		if (right) Player.Move(0, 40);
-		else Player.Move(0, -40);
+		if (right)
+		{
+			Player.Move(0, 40);
+			cameraY = 200;
+		}
+		else
+		{
+			Player.Move(0, -40);
+			cameraY = 0;
+		}
 	}
 
 	if (rp.x == 600) right = false;
@@ -167,6 +181,10 @@ void Game::Draw()
 	//Box.GetRect(&ra.x, &ra.y, &ra.w, &ra.h);
 	Platform1.GetRect(&rp.x, &rp.y, &rp.w, &rp.h);
 	Platform2.GetRect(&rp2.x, &rp2.y, &rp2.w, &rp2.h);
+
+	rc.y -= cameraY;
+	rp.y -= cameraY;
+	rp2.y -= cameraY;
 
 	//Draw player
 
