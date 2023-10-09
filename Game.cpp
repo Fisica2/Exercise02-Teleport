@@ -153,12 +153,12 @@ bool Game::Update()
 		if (right)
 		{
 			Player.Move(0, 40);
-			cameraY = 200;
+		/*	cameraY = 200;*/
 		}
 		else
 		{
 			Player.Move(0, -40);
-			cameraY = 0;
+			/*cameraY = 0;*/
 		}
 	}
 
