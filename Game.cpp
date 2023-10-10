@@ -129,9 +129,6 @@ bool Game::Update()
 	}
 	else if (currentPlatform == 2 && rp.x == 300) currentPlatform = 1;
 
-	//Player update
-
-		
 	if (right)
 	{
 		Platform1.Move(100 * deltaTime, 0);
@@ -153,17 +150,15 @@ bool Game::Update()
 		if (right)
 		{
 			Player.Move(0, 40);
-		/*	cameraY = 200;*/
 		}
 		else
 		{
 			Player.Move(0, -40);
-			/*cameraY = 0;*/
 		}
 	}
 
-	if (rp.x == 600) right = false;
-	if (rp.x == 20) right = true;
+	if (rp.x == changePosition1) right = false;
+	if (rp.x == changePosition2) right = true;
 
 	return false;
 }
@@ -175,10 +170,8 @@ void Game::Draw()
 	//Clear rendering target
 	SDL_RenderClear(Renderer);
 
-	//God mode uses red wireframe rectangles for physical objects
-
 	Player.GetRect(&rc.x, &rc.y, &rc.w, &rc.h);
-	//Box.GetRect(&ra.x, &ra.y, &ra.w, &ra.h);
+
 	Platform1.GetRect(&rp.x, &rp.y, &rp.w, &rp.h);
 	Platform2.GetRect(&rp2.x, &rp2.y, &rp2.w, &rp2.h);
 

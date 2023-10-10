@@ -45,6 +45,9 @@ private:
 	int cameraY;
 	int currentPlatform;
 	float previousTime = 0;
+	
+	int changePosition1 = 600;
+	int changePosition2 = 20;
 
 	bool right = true;
 

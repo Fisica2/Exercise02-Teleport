@@ -1,7 +1,9 @@
 ﻿  Game.cpp
-C:\Users\guillemam2\Documents\GitHub\Exercise02-Teleport\Game.cpp(114,20): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\guillemam2\Documents\GitHub\Exercise02-Teleport\Game.cpp(137,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\guillemam2\Documents\GitHub\Exercise02-Teleport\Game.cpp(141,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\guillemam2\Documents\GitHub\Exercise02-Teleport\Game.cpp(147,19): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\guillemam2\Documents\GitHub\Exercise02-Teleport\Game.cpp(149,60): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  SpriteSDL.vcxproj -> C:\Users\guillemam2\Documents\GitHub\Exercise02-Teleport\Debug\SpriteSDL.exe
+D:\GitHub\Exercise02-Teleport\Game.cpp(114,20): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+D:\GitHub\Exercise02-Teleport\Game.cpp(137,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\Exercise02-Teleport\Game.cpp(141,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\Exercise02-Teleport\Game.cpp(147,19): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\GitHub\Exercise02-Teleport\Game.cpp(149,60): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  main.cpp
+  Generating Code...
+  SpriteSDL.vcxproj -> D:\GitHub\Exercise02-Teleport\Debug\SpriteSDL.exe
